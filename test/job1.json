@@ -1,0 +1,9 @@
+{
+    "id": "persistence-test",
+    "cmd": "env > /tmp/my-env; touch /tmp/should-not-see-this",
+    "mem": 16,
+    "cpus": 0.1,
+    "instances": 1,
+    "disk": 0.0,
+    "ports": [0]
+}

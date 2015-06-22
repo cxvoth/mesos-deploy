@@ -1,0 +1,22 @@
+{
+  "permissive" : false,
+
+  "register_frameworks": [
+    {
+      "principals": { "values": ["marathon"]  },
+      "roles": { "values": ["prod","qa","dev"] }
+    }
+  ],
+  "run_tasks": [
+    {
+      "principals": { "type": "ANY" },
+      "users": { "type": "ANY" }
+    }
+  ],
+  "shutdown_frameworks": [
+    {
+      "principals": { "values": ["user1"] },
+      "framework_principals": { "values": ["marathon"] }
+    }
+  ]
+}

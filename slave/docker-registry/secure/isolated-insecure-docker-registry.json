@@ -1,0 +1,7 @@
+{
+  "id": "docker-registry",
+  "cmd": "docker run --name=docker-registry --rm=true --expose=5000 -v /vagrant/registry-storage:/registry-storage -e SETTINGS_FLAVOR=local -e LOGLEVEL=debug  -e DEBUG=true -e STANDALONE=true -e STORAGE=local -e STORAGE_PATH=/registry-storage registry",
+  "cpus": 0.5,
+  "mem": 128.0,
+  "instances": 1
+}

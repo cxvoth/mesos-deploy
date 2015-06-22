@@ -1,0 +1,87 @@
+*** CONTROLLER ***
+
+* ZooKeeper *
+
+/var/lib/zookeeper/myid
+/etc/zookeeper/conf/zoo.cfg
+/usr/lib/systemd/system/zookeeper.service 
+
+
+* Mesos-master *
+
+/etc/default/mesos
+/etc/default/mesos-master
+/etc/mesos/zk
+/etc/mesos-master/quorum
+/etc/mesos-master/ip
+/etc/mesos-master/hostname
+/etc/mesos-master/registry ? not used
+/usr/lib/systemd/system/mesos-master.service
+
+
+* Marathon *
+
+/etc/marathon/conf/master
+/etc/marathon/conf/zk
+/usr/lib/systemd/system/marathon.service 
+
+
+* Mesos-DNS *
+
+/etc/mesos-dns/config.json
+/usr/lib/systemd/system/mesos-dns.service 
+
+
+
+*** SLAVE ***
+
+* Mesos-slave *
+
+/etc/default/mesos
+/etc/default/mesos-slave
+/etc/mesos/zk
+/etc/mesos-slave/ip
+/usr/lib/systemd/system/mesos-slave.service
+
+
+* DNS *
+
+/etc/resolv.conf (host)
+/etc/sysconfig/docker-network (modifies /etc/resolv.conf in container)
+
+
+* Docker *
+
+/etc/sysconfig/docker  			<< $OPTIONS
+/etc/sysconfig/docker-network	<< $DOCKER_NETWORK_OPTIONS
+/etc/sysconfig/docker-storage	<< $DOCKER_STORAGE_OPTIONS 
+
+/usr/lib/systemd/system/docker.service
+
+		EnvironmentFile=-/etc/sysconfig/docker
+		EnvironmentFile=-/etc/sysconfig/docker-storage
+		EnvironmentFile=-/etc/sysconfig/docker-network
+		ExecStart=/usr/bin/docker -d $OPTIONS \
+		          $DOCKER_STORAGE_OPTIONS \
+		          $DOCKER_NETWORK_OPTIONS \
+		          $ADD_REGISTRY \
+		          $BLOCK_REGISTRY \
+		          $INSECURE_REGISTRY
+
+
+* Docker modifications for private registry *
+
+/etc/docker/certs.d/docker-registry.marathon.mesos:5443/ca.crt  << no effect?
+
+
+
+* Mesos config modifications for Docker *
+
+/etc/mesos-slave/containerizers
+/etc/mesos-slave/executor_registration_timeout
+
+
+
+
+
+

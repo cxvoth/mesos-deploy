@@ -1,0 +1,7 @@
+{
+  "id": "docker-registry-proxy-config",
+  "cmd": "docker create --name docker-registry-proxy-config -v /etc/nginx/ssl -v /etc/nginx/conf.d busybox && docker run --rm --volumes-from docker-registry-proxy-config quay.io/aptible/registry-proxy htpasswd -bc /etc/nginx/conf.d/docker-registry-proxy.htpasswd admin passw0rd && docker run --rm --volumes-from docker-registry-proxy-config quay.io/aptible/registry-proxy openssl genrsa -out /etc/nginx/ssl/docker-registry-proxy.key 2048 && docker run --rm --volumes-from docker-registry-proxy-config quay.io/aptible/registry-proxy openssl req -x509 -new -nodes -key /etc/nginx/ssl/docker-registry-proxy.key -days 10000  -subj '/C=CA/ST=ON/L=Markham/O=IBM Middleware/CN=docker-registry.marathon.mesos' -out /etc/nginx/ssl/docker-registry-proxy.crt",
+  "cpus": 0.5,
+  "mem": 128.0,
+  "instances": 1
+}

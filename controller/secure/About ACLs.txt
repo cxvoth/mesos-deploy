@@ -1,0 +1,39 @@
+mesos --acls
+
+{
+  "permissive" : false,
+
+  "register_frameworks": [
+    {
+      "principals": { "values": ["framework1", "framework2"]  },
+      "roles": { "values": ["role1"] }
+    }
+  ],
+  "run_tasks": [
+    {
+      "principals": { "values": ["framework1", "framework2"] },
+      "users": { "values": ["username1"] }
+    }
+  ],
+  "shutdown_frameworks": [
+    {
+      "principals": { "values": ["username1", "username2"] },
+      "framework_principals": { "values": ["framework1"] }
+    }
+  ]
+}
+
+
+Register frameworks - Frameworks named "principals" can "register_frameworks" with roles "roles"
+Run tasks/executors - Frameworks named "principals" can "run_tasks" as unix users named "users"
+Shutown frameworks -  Users named "users" can "shutdown_frameworks" the frameworks named "framework_principals"
+
+principals, framework_principals and users may be:
+{ "type": "ANY" }
+{ "type": "NONE" }
+
+Marathon
+
+--framework_name (Optional. Default: marathon-VERSION): The framework name to register with Mesos.
+--mesos_role (Optional. Default: None): Mesos role for this framework.
+--mesos_user (Optional. Default: current user): Mesos user for this framework. Note: Default is determined by SystemProperties.get("user.name").

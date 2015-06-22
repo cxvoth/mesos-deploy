@@ -1,0 +1,7 @@
+{
+  "id": "docker-registry-proxy",
+  "cmd": "docker run --name=docker-registry-proxy --rm=true --link docker-registry:registry --volumes-from docker-registry-proxy-config -p 5443:443  quay.io/aptible/registry-proxy",
+  "cpus": 0.5,
+  "mem": 128.0,
+  "instances": 1
+}
