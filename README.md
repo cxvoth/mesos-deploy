@@ -29,7 +29,8 @@ Worker Node container (x1)
 	docker-registry
 
 ---------------------------------------------------------------------------------------------------------
-Building a single controller node from scratch:
+## Building a single controller node from scratch
+
 Use a base box "chef/centos-7.0"
 
 sudo ./zookeeper.sh 1 192.168.99.101
@@ -49,9 +50,9 @@ sudo ./docker-slave-registry.sh docker-registry.marathon.mesos
 
 sudo ./secure-docker-registry.sh 192.168.99.101:8080	<< uses secure-docker-registry.json
 
-Testing:
+### Testing
 
-On the Controller:
+#### On the Controller
 	see https://github.com/mesosphere/marathon/tree/master/examples
 
 	__Mesos-Master__
@@ -155,17 +156,26 @@ On the Controller:
 	}
 
 
-To upgrade from a single controller node to multiple (3,7,etc):
+## To upgrade from a single controller node to multiple (3,7,etc)
 
-On the Controller:
-	ZooKeeper -> Update /var/lib/zookeeper/myid to be a unique integer for each node
-	ZooKeeper -> Update /etc/zookeeper/conf/zoo.cfg to include a reference to each zookeeper node (using myid numbers)
-	Mesos Master -> Update /etc/mesos/zk to include all Zookeeper servers (/mesos namespace)
-	Mesos Master -> Update /etc/mesos-master/quorum from 1 to >50% of master servers (so for 3 servers, quorum is 2)
-	Marathon -> Update /etc/marathon/conf/master to include all Zookeeper servers (same as /etc/mesos/zk) (this should not be required since /etc/marathon/conf/zk is used)
-	Marathon -> Update /etc/marathon/conf/zk to include all Zookeeper servers (/marathon namespace)
-	Mesos-DNS -> Update "zk" and "masters" keys in /etc/mesos-dns/config.json (masters should not be required since zk is used)
+### On the Controller
 
-On the Slave:
+	ZooKeeper -> Update /var/lib/zookeeper/myid to be a unique integer for each node  
+
+	ZooKeeper -> Update /etc/zookeeper/conf/zoo.cfg to include a reference to each zookeeper node (using myid numbers)  
+
+	Mesos Master -> Update /etc/mesos/zk to include all Zookeeper servers (/mesos namespace)  
+
+	Mesos Master -> Update /etc/mesos-master/quorum from 1 to >50% of master servers (so for 3 servers, quorum is 2)  
+
+	Marathon -> Update /etc/marathon/conf/master to include all Zookeeper servers (same as /etc/mesos/zk) (this should not be required since /etc/marathon/conf/zk is used)  
+
+	Marathon -> Update /etc/marathon/conf/zk to include all Zookeeper servers (/marathon namespace)  
+
+	Mesos-DNS -> Update "zk" and "masters" keys in /etc/mesos-dns/config.json (masters should not be required since zk is used)  
+
+
+### On the Slave 
+
 	Mesos-Slave -> Update /etc/mesos/zk to include all Zookeeper servers (/mesos namespace)
 
