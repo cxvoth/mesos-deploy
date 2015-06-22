@@ -1,0 +1,26 @@
+TODO:
+d	Wrap mesos-dns as a systemd service for restart supervision + boot startup
+	Add (Netflix) Exhibitor as a Zookeeper supervisor - http://techblog.netflix.com/2012/04/introducing-exhibitor-supervisor-system.html
+d	Add dig util to test dns
+	How to easily update slaves with new zookeeper instances?
+d	Mesos-DNS must use standard port 53? because /etc/resolv.conf does not allow port specification
+	Use dhcp to configure nameservers for slaves /etc/dhcp/dhclient.conf
+	install mesos CLI
+	install marathon CLI - https://github.com/shoenig/marathonctl
+	slave firewall?  $ firewall-cmd --list-all
+~	local docker registry
+	healthchecks (by slave executor instead of marathon master)
+	slave attributes + framework role
+x	Access control - mesos - acls.json (unable to effectively test due to inability to authenticate framework)
+x	Framework authentication with Mesos-Master
+	Slave authentication with Mesos-Master
+d	SSL + Basic auth - marathon 
+d		SSL self-signed cert - needs domain name; chain to IBM cert?
+x  		disable http access to marathon web UI
+	Synch clocks for all controllers
+	Mesos monitoring - https://www.antonlindstrom.com/2015/02/24/monitoring-mesos-tasks-with-prometheus.html
+	Mesos + Jenkins - http://www.ebaytechblog.com/2014/05/12/delivering-ebays-ci-solution-with-apache-mesos-part-ii/
+	HDFS - http://stackoverflow.com/questions/28368751/persistent-storage-for-apache-mesos/28493909#28493909
+d	Slaves must refer to mesos-dns for service resolution (use docker run -dns and -dns-search)
+	how to randomize the nameserver order for each slave
+d	default mesos container has no fs isolation
