@@ -126,40 +126,40 @@ On the Controller:
 
 	job.json:
 	{
-  "id": "bridged-webapp",
-  "cmd": "python3 -m http.server 8080",
-  "cpus": 0.5,
-  "mem": 64.0,
-  "instances": 2,
-  "container": {
-    "type": "DOCKER",
-    "docker": {
-      "image": "python:3",
-      "network": "BRIDGE",
-      "portMappings": [
-        { "containerPort": 8080, "hostPort": 0, "servicePort": 9000, "protocol": "tcp" },
-        { "containerPort": 161, "hostPort": 0, "protocol": "udp"}
-      ]
-    }
-  },
-  "healthChecks": [
-    {
-      "protocol": "HTTP",
-      "portIndex": 0,
-      "path": "/",
-      "gracePeriodSeconds": 5,
-      "intervalSeconds": 20,
-      "maxConsecutiveFailures": 3
-    }
-  ]
-}
+	  "id": "bridged-webapp",
+	  "cmd": "python3 -m http.server 8080",
+	  "cpus": 0.5,
+	  "mem": 64.0,
+	  "instances": 2,
+	  "container": {
+	    "type": "DOCKER",
+	    "docker": {
+	      "image": "python:3",
+	      "network": "BRIDGE",
+	      "portMappings": [
+	        { "containerPort": 8080, "hostPort": 0, "servicePort": 9000, "protocol": "tcp" },
+	        { "containerPort": 161, "hostPort": 0, "protocol": "udp"}
+	      ]
+	    }
+  	  },
+  	  "healthChecks": [
+    	{
+	      "protocol": "HTTP",
+	      "portIndex": 0,
+	      "path": "/",
+	      "gracePeriodSeconds": 5,
+	      "intervalSeconds": 20,
+	      "maxConsecutiveFailures": 3
+	    }
+  	  ]
+	}
 
 
 To upgrade from a single controller node to multiple (3,7,etc):
 
 On the Controller:
-	Zookeeper -> Update /var/lib/zookeeper/myid to be a unique integer for each node
-	Zookeeper -> Update /etc/zookeeper/conf/zoo.cfg to include a reference to each zookeeper node (using myid numbers)
+	ZooKeeper -> Update /var/lib/zookeeper/myid to be a unique integer for each node
+	ZooKeeper -> Update /etc/zookeeper/conf/zoo.cfg to include a reference to each zookeeper node (using myid numbers)
 	Mesos Master -> Update /etc/mesos/zk to include all Zookeeper servers (/mesos namespace)
 	Mesos Master -> Update /etc/mesos-master/quorum from 1 to >50% of master servers (so for 3 servers, quorum is 2)
 	Marathon -> Update /etc/marathon/conf/master to include all Zookeeper servers (same as /etc/mesos/zk) (this should not be required since /etc/marathon/conf/zk is used)
